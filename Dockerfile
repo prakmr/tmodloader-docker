@@ -1,11 +1,14 @@
-FROM frolvlad/alpine-glibc:alpine-3.10 as build
+FROM ubuntu as build
 
-ARG TMOD_VERSION=0.11.7.8
-ARG TERRARIA_VERSION=1353
+ARG TMOD_VERSION=2022.04.62.6
+ARG TERRARIA_VERSION=1436
 
-RUN apk update &&\
-    apk add --no-cache --virtual build curl unzip &&\
-    apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing mono
+RUN apt update
+RUN apt install -y dirmngr gnupg apt-transport-https ca-certificates software-properties-common
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+RUN apt-add-repository -y 'deb https://download.mono-project.com/repo/ubuntu stable-focal main'
+RUN apt install -y mono-complete 
+RUN apt install -y curl unzip
 
 WORKDIR /terraria-server
 
