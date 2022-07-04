@@ -1,19 +1,17 @@
-FROM ubuntu as build
+FROM frolvlad/alpine-glibc:alpine-3.10 as build
 
 ARG TMOD_VERSION=2022.06.96.4
 ARG TERRARIA_VERSION=1436
 
-RUN apt update
-RUN apt install -y dirmngr gnupg apt-transport-https ca-certificates software-properties-common
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-RUN apt-add-repository -y 'deb https://download.mono-project.com/repo/ubuntu stable-focal main'
-RUN apt install -y mono-complete 
-RUN apt install -y curl unzip
+RUN apk update &&\
+    apk add --no-cache --virtual build curl unzip &&\
+    apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing mono
 
 WORKDIR /terraria-server
+
 RUN cp /usr/lib/libMonoPosixHelper.so .
 
-RUN curl -SLO "http://terraria.org/server/terraria-server-${TERRARIA_VERSION}.zip" &&\
+RUN curl -SLO "https://terraria.org/api/download/pc-dedicated-server/terraria-server-${TERRARIA_VERSION}.zip" &&\
     unzip terraria-server-*.zip &&\
     rm terraria-server-*.zip &&\
     cp --verbose -a "${TERRARIA_VERSION}/Linux/." . &&\
