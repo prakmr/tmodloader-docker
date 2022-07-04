@@ -32,7 +32,7 @@ WORKDIR /terraria-server
 COPY --from=build /terraria-server ./
 
 RUN apt update &&\
-    apt -y install procps cron tmux
+    apk add --no-cache procps tmux
 RUN ln -s ${HOME}/.local/share/Terraria/ /terraria
 COPY inject.sh /usr/local/bin/inject
 COPY handle-idle.sh /usr/local/bin/handle-idle
