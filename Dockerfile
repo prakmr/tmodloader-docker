@@ -24,13 +24,13 @@ RUN curl -SLO "https://github.com/tModLoader/tModLoader/releases/download/v${TMO
     chmod u+x start-tModLoaderServer.sh &&\
     chmod u+x start-tModLoader.sh
 
-FROM frolvlad/alpine-glibc:alpine-3.10
+FROM bitnami/dotnet:3.1-debian-10
 
 WORKDIR /terraria-server
 COPY --from=build /terraria-server ./
 
-RUN apk update &&\
-    apk add --no-cache procps tmux
+RUN apt update &&\
+    apt -y install procps cron tmux
 RUN ln -s ${HOME}/.local/share/Terraria/ /terraria
 COPY inject.sh /usr/local/bin/inject
 COPY handle-idle.sh /usr/local/bin/handle-idle
