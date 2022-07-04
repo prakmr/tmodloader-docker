@@ -26,7 +26,7 @@ RUN curl -SLO "https://github.com/tModLoader/tModLoader/releases/download/v${TMO
     chmod u+x start-tModLoaderServer.sh &&\
     chmod u+x start-tModLoader.sh
 
-FROM bitnami/dotnet:3.1-debian-10
+FROM frolvlad/alpine-glibc:alpine-3.10
 
 WORKDIR /terraria-server
 COPY --from=build /terraria-server ./
