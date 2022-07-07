@@ -4,6 +4,8 @@
 maxplayers=8
 worldname=World
 world=/terraria/ModLoader/Worlds/World.wld
+modpath=/terraria/ModLoader/Mods
+modpack=enabled.json
 port=7777
 #password=
 motd=Please don’t cut the purple trees!
